@@ -4,6 +4,7 @@ import cors from "cors";
 dotenv.config();
 
 import { connectDB } from "./db.js";
+import routes from "./routes/index.js";
 
 const app: express.Express = express();
 const port = process.env.PORT || 4000;
@@ -14,6 +15,9 @@ app.use(express.json());
 app.get("/health", (_req, res) => {
   res.status(200).send("Server is healthy");
 });
+
+// Main route
+app.use("/api", routes);
 
 connectDB()
   .then(() => {
