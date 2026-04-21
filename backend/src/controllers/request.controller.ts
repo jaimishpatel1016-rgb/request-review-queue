@@ -85,6 +85,21 @@ const getRequestHistory = async (req: Request, res: Response, next: NextFunction
   }
 };
 
+const updateRequiredFields = async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const request = await requestService.updateRequiredFields(
+      req.params.id as string,
+      req.body.requiredFieldsComplete,
+    );
+    res.json({
+      message: "Required fields updated successfully",
+      data: request,
+    });
+  } catch (err) {
+    next(err);
+  }
+};
+
 export default {
   createRequest,
   listRequests,
@@ -93,4 +108,5 @@ export default {
   updateOwner,
   addNote,
   getRequestHistory,
+  updateRequiredFields,
 };

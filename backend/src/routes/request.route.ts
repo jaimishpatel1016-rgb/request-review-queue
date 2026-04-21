@@ -10,5 +10,6 @@ router.patch("/:id/status", requestController.updateStatus);
 router.patch("/:id/owner", requestController.updateOwner);
 router.post("/:id/notes", requestController.addNote);
 router.get("/:id/history", requestController.getRequestHistory);
+router.patch("/:id/required-fields", requestController.updateRequiredFields);
 
 export default router;

@@ -199,6 +199,17 @@ async function getRequestHistory(id: string) {
   return request.history;
 }
 
+async function updateRequiredFields(id: string, complete: boolean) {
+  const request = await RequestModel.findById(id);
+  if (!request) {
+    throw new NotFoundError(`Request not found`);
+  }
+
+  request.requiredFieldsComplete = complete;
+  await request.save();
+  return request.toObject();
+}
+
 export default {
   createRequest,
   listRequests,
@@ -207,4 +218,5 @@ export default {
   updateOwner,
   addNote,
   getRequestHistory,
+  updateRequiredFields,
 };

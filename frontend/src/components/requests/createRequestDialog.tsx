@@ -66,6 +66,7 @@ export default function CreateRequestDialog() {
       queryClient.invalidateQueries({ queryKey: ["requests"] });
       reset();
       setOpen(false);
+      toast.success("Request created");
     },
     onError: (error) => {
       toast.error(error.message);

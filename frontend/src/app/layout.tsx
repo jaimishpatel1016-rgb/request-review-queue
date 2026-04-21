@@ -4,6 +4,7 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Providers } from "@/components/providers"
 import { cn } from "@/lib/utils";
+import { Toaster } from "@/components/ui/sonner";
 
 const figtree = Figtree({subsets:['latin'],variable:'--font-sans'})
 
@@ -25,6 +26,7 @@ export default function RootLayout({
     >
       <body>
         <Providers>
+          <Toaster />
           <ThemeProvider>{children}</ThemeProvider>
         </Providers>
       </body>

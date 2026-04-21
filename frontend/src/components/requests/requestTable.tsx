@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Badge } from "@/components/ui/badge";
 import {
   Table,
@@ -7,16 +8,8 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { formatDate } from "@/lib/format";
 import type { Request } from "@/types/request";
-
-function formatDate(dateStr: string | null) {
-  if (!dateStr) return "—";
-  return new Date(dateStr).toLocaleDateString("en-US", {
-    month: "short",
-    day: "numeric",
-    year: "numeric",
-  });
-}
 
 export default function RequestTable({ requests }: { requests: Request[] }) {
   return (
@@ -34,8 +27,12 @@ export default function RequestTable({ requests }: { requests: Request[] }) {
       </TableHeader>
       <TableBody>
         {requests.map((req) => (
-          <TableRow key={req._id}>
-            <TableCell className="font-medium">{req.title}</TableCell>
+          <TableRow key={req._id} className="cursor-pointer">
+            <TableCell className="font-medium">
+              <Link href={`/requests/${req._id}`} className="hover:underline">
+                {req.title}
+              </Link>
+            </TableCell>
             <TableCell>{req.submitter}</TableCell>
             <TableCell>
               <Badge>
