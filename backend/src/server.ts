@@ -5,6 +5,7 @@ dotenv.config();
 
 import { connectDB } from "./db.js";
 import routes from "./routes/index.js";
+import { errorHandler } from "./middleware/error.middleware.js";
 
 const app: express.Express = express();
 const port = process.env.PORT || 4000;
@@ -18,6 +19,7 @@ app.get("/health", (_req, res) => {
 
 // Main route
 app.use("/api", routes);
+app.use(errorHandler);
 
 connectDB()
   .then(() => {

@@ -5,7 +5,7 @@ const router: Router = Router();
 
 router.get("/", requestController.listRequests);
 router.post("/", requestController.createRequest);
-router.get("/:id", requestController.getRequest);
+router.get("/:id", requestController.getRequestById);
 router.patch("/:id/status", requestController.updateStatus);
 router.patch("/:id/owner", requestController.updateOwner);
 router.post("/:id/notes", requestController.addNote);
