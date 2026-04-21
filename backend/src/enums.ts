@@ -1,0 +1,24 @@
+export enum REQUEST_STATUS {
+  NEW = "NEW",
+  IN_REVIEW = "IN_REVIEW",
+  NEEDS_INFO = "NEEDS_INFO",
+  APPROVED = "APPROVED",
+  REJECTED = "REJECTED",
+}
+
+export const REQUEST_STATUS_VALUES = Object.values(REQUEST_STATUS);
+
+export enum REQUEST_PRIORITY {
+  LOW = "LOW",
+  MEDIUM = "MEDIUM",
+  HIGH = "HIGH",
+}
+
+export const REQUEST_PRIORITY_VALUES = Object.values(REQUEST_PRIORITY);
+
+export enum HISTORY_TYPE {
+  STATUS_CHANGE = "STATUS_CHANGE",
+  OWNER_CHANGE = "OWNER_CHANGE",
+}
+
+export const HISTORY_TYPE_VALUES = Object.values(HISTORY_TYPE);
