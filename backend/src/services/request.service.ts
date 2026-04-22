@@ -92,13 +92,17 @@ async function listRequests(query: Request["query"]) {
     filters.owner = owner;
   }
 
-  if (due === "soon") {
-    filters.dueDate = {
-      $gte: new Date(),
-      $lte: new Date(Date.now() + 7 * 24 * 60 * 60 * 1000),
-    };
-  } else if (due === "overdue") {
-    filters.dueDate = { $lt: new Date() };
+  if (due === "soon" || due === "overdue") {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    if (due === "soon") {
+      const nextWeek = new Date(today);
+      nextWeek.setDate(nextWeek.getDate() + 7);
+      filters.dueDate = { $gte: today, $lte: nextWeek };
+    } else {
+      filters.dueDate = { $lt: today };
+    }
   }
 
   const requests = await RequestModel.find(filters).lean();
