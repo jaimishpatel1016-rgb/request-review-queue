@@ -7,6 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import apiClient from "@/lib/api-client";
 import { REQUEST_PRIORITY_VALUES } from "@/enums/enums";
+import { OWNERS } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -32,6 +33,7 @@ const createRequestSchema = z.object({
   submitter: z.string().min(1, "Submitter is required"),
   priority: z.enum(["LOW", "MEDIUM", "HIGH"]),
   dueDate: z.string().min(1, "Due date is required"),
+  owner: z.string().optional(),
 });
 
 type CreateRequestForm = z.infer<typeof createRequestSchema>;
@@ -53,6 +55,7 @@ export default function CreateRequestDialog() {
       submitter: "",
       priority: "MEDIUM",
       dueDate: "",
+      owner: "",
     },
   });
 
@@ -61,6 +64,7 @@ export default function CreateRequestDialog() {
       apiClient.post("/requests", {
         ...data,
         dueDate: new Date(data.dueDate).toISOString(),
+        owner: data.owner || null,
       }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["requests"] });
@@ -123,6 +127,28 @@ export default function CreateRequestDialog() {
             {errors.priority && (
               <FieldError>{errors.priority.message}</FieldError>
             )}
+          </Field>
+
+          <Field>
+            <FieldLabel>Owner</FieldLabel>
+            <Controller
+              control={control}
+              name="owner"
+              render={({ field }) => (
+                <Select value={field.value || ""} onValueChange={field.onChange}>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select an owner" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {OWNERS.map((owner) => (
+                      <SelectItem key={owner} value={owner}>
+                        {owner}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              )}
+            />
           </Field>
 
           <Field>
