@@ -38,8 +38,8 @@ export default function RequestTable({ requests }: { requests: Request[] }) {
       <TableBody>
         {requests.map((req) => {
           const days = req.dueDate ? daysUntilDue(req.dueDate) : null;
-          const overdue = days && days < 0;
-          const dueSoon = days && days >= 0 && days <= 7;
+          const overdue = days !== null && days < 0;
+          const dueSoon = days !== null && days >= 0 && days <= 7;
 
           return (
             <TableRow key={req._id} className="cursor-pointer">
